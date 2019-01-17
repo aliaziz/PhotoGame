@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PhotoGame</string>
+    <string name="end_point">http://debugurl.com</string>
+</resources>

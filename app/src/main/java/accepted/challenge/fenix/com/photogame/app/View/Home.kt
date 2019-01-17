@@ -1,9 +1,11 @@
-package accepted.challenge.fenix.com.photogame
+package accepted.challenge.fenix.com.photogame.app.View
 
+import accepted.challenge.fenix.com.photogame.R
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import javax.inject.Inject
 
-class Home : AppCompatActivity() {
+class Home @Inject constructor(): AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

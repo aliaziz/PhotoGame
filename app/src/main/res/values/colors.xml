@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Test build colors-->
+    <color name="colorTestPrimary">#b71c1c</color>
+    <color name="colorTestPrimaryDark">#b71c1c</color>
+    <color name="colorTestAccent">#d8d81b</color>
 </resources>
