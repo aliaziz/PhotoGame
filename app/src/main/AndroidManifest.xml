@@ -3,26 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="accepted.challenge.fenix.com.photogame">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:name=".app.PhotoGame"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="true"
+        android:icon="@drawable/camera"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/camera"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".app.View.Home">
+        <activity android:name=".app.View.Home" />
+        <activity
+            android:name=".app.View.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".app.View.LoginRegActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".app.View.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".app.View.SignUpActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/upload_pic"
+        android:icon="@drawable/upload"
+        android:title="@string/upload_pic" />
+
+    <item
+        android:id="@+id/play_game"
+        android:icon="@drawable/camera"
+        android:title="@string/play" />
+
+    <item
+        android:id="@+id/leader_board"
+        android:icon="@drawable/leadership"
+        android:title="@string/leadership" />
+
+</menu>

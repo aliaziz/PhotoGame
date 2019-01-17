@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">PhotoGame</string>
-    <string name="end_point">http://debugurl.com</string>
+    <string name="end_point">http://productionurl.com</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="image">image</string>
+    <string name="enter_username">Enter username</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">Or</string>
+    <string name="enter_email">Enter email</string>
+    <string name="back">Back to login</string>
+    <string name="missing_fields">All fields are required</string>
+    <string name="upload_pic">Upload Pic</string>
+    <string name="play">Play</string>
+    <string name="leadership">Leadership board</string>
 </resources>

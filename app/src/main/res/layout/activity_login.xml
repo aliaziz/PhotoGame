@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:padding="@dimen/activity_horizontal_margin" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageView android:layout_width="150.0dip" android:layout_height="150.0dip" android:src="@drawable/camera" />
+        <com.beardedhen.androidbootstrap.BootstrapWell android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/userName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:hint="@string/enter_username"  app:bootstrapSize="lg" app:roundedCorners="true" />
+                <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/userEmail" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_email" app:bootstrapSize="lg" app:roundedCorners="true" />
+                <Button android:textColor="@color/green" android:id="@+id/signInButton" android:background="@drawable/button_green" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginTop="@dimen/ten_dp" android:text="@string/sign_in" />
+                <com.beardedhen.androidbootstrap.AwesomeTextView android:id="@+id/orLabel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/ten_dp" android:text="@string/or" app:bootstrapBrand="primary" />
+                <Button android:textColor="@color/blue" android:id="@+id/registerButton" android:background="@drawable/button_blue" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginTop="@dimen/ten_dp" android:text="@string/sign_up" />
+            </LinearLayout>
+        </com.beardedhen.androidbootstrap.BootstrapWell>
+    </LinearLayout>
+</LinearLayout>

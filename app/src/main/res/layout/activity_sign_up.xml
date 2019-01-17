@@ -1,0 +1,14 @@
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:padding="@dimen/activity_horizontal_margin" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageView android:layout_width="150.0dp" android:layout_height="150.0dp" android:src="@drawable/camera" />
+        <com.beardedhen.androidbootstrap.BootstrapWell android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/userEmail" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_email" android:inputType="number" app:bootstrapSize="lg" app:roundedCorners="true" />
+                <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/userName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_username" android:inputType="number" app:bootstrapSize="lg" app:roundedCorners="true" />
+                <Button android:textColor="@color/blue" android:id="@+id/registerButton" android:background="@drawable/button_blue" android:layout_width="fill_parent" android:layout_height="35.0dp" android:layout_marginTop="@dimen/ten_dp" android:text="@string/sign_up" />
+                <Button android:textColor="@color/green" android:id="@+id/backButton" android:background="@drawable/button_blue" android:layout_width="wrap_content" android:layout_height="35.0dp" android:layout_marginTop="@dimen/ten_dp" android:text="@string/back" android:padding="@dimen/ten_dp"/>
+            </LinearLayout>
+        </com.beardedhen.androidbootstrap.BootstrapWell>
+    </LinearLayout>
+</LinearLayout>

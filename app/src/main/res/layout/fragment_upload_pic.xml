@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/ten_dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".app.View.HomeFrags.UploadPicFrag">
+    <ImageView android:layout_width="150.0dip" android:layout_height="150.0dip" android:src="@drawable/camera" android:id="@+id/cameraId"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/caption" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:hint="@string/enter_caption"  app:bootstrapSize="lg" app:roundedCorners="true" />
+    <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/description" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_description" app:bootstrapSize="lg" app:roundedCorners="true" />
+    <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/location" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_address" app:bootstrapSize="lg" app:roundedCorners="true" />
+    <com.beardedhen.androidbootstrap.BootstrapDropDown
+        android:id="@+id/category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dp"
+        android:hint="@string/enter_description"
+        app:bootstrapSize="lg"
+        app:roundedCorners="true" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageButton
+        android:id="@+id/uploadPic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_curved"
+        android:src="@drawable/upload"
+        android:text="@string/upload_pic"
+        android:scaleType="centerInside"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+
+</LinearLayout>
