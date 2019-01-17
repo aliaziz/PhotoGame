@@ -21,6 +21,7 @@
             android:contentDescription="@string/image" />
 
         <TextView
+            android:gravity="bottom"
             android:id="@+id/viewTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"

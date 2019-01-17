@@ -8,18 +8,23 @@
     android:padding="@dimen/ten_dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".app.View.HomeFrags.UploadPicFrag">
-    <ImageView android:layout_width="150.0dip" android:layout_height="150.0dip" android:src="@drawable/camera" android:id="@+id/cameraId"/>
+    <ImageView android:layout_width="150.0dip" android:layout_marginTop="@dimen/sixty_dp" android:layout_height="150.0dip" android:src="@drawable/camera" android:id="@+id/cameraId"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/caption" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:hint="@string/enter_caption"  app:bootstrapSize="lg" app:roundedCorners="true" />
     <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/description" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_description" app:bootstrapSize="lg" app:roundedCorners="true" />
     <com.beardedhen.androidbootstrap.BootstrapEditText android:id="@+id/location" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:hint="@string/enter_address" app:bootstrapSize="lg" app:roundedCorners="true" />
     <com.beardedhen.androidbootstrap.BootstrapDropDown
         android:id="@+id/category"
-        android:layout_width="fill_parent"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:layout_marginBottom="@dimen/ten_dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10.0dp"
-        android:hint="@string/enter_description"
-        app:bootstrapSize="lg"
-        app:roundedCorners="true" />
+        app:bootstrapText="Select category"
+        app:bootstrapBrand="regular"
+        app:roundedCorners="true"
+        app:bootstrapSize="md"
+        app:dropdownResource="@array/categories"
+        app:bootstrapExpandDirection="down"/>
+
 
     <ImageButton
         android:id="@+id/uploadPic"

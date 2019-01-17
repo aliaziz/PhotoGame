@@ -66,6 +66,7 @@ class LoginRegActivity : BaseActivity() {
     private fun handleLogin() {
         signInButton.setOnClickListener {
             moveTo(HomeActivity::class.java)
+            finish()
 //            val userNameText = userName.text.toString()
 //            if (areCredsValid(userNameText)) {
 //

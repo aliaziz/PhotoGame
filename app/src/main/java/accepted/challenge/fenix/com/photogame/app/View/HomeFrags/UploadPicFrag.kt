@@ -41,9 +41,6 @@ class UploadPicFrag : Fragment() {
         val view = inflater.inflate(R.layout.fragment_upload_pic, container, false)
         view.cameraId.setOnClickListener { dispatchTakePictureIntent() }
         view.uploadPic.setOnClickListener { uploadPicData() }
-        view.category.dropdownData =
-                arrayOf("People", "Nature", "City Life", "Love",
-                "Sports", "Family")
         return view
     }
 
