@@ -19,9 +19,13 @@ class LoginRegActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
         setupView()
-        registerListeners()
+
+        if (userViewModel.isLoggedIn) moveTo(HomeActivity::class.java)
+        else {
+            setContentView(R.layout.activity_login)
+            registerListeners()
+        }
     }
 
     private fun registerListeners() {
@@ -33,7 +37,7 @@ class LoginRegActivity : BaseActivity() {
         orLabel.visibility = View.GONE
         userEmail.visibility = View.VISIBLE
         setLoginListener(LoginType.Register)
-        signInButton.text = getString(R.string.sign_in)
+        signInButton.text = getString(R.string.sign_up)
         registerButton.text = getString(R.string.back)
 
         registerButton.setOnClickListener {
@@ -61,33 +65,31 @@ class LoginRegActivity : BaseActivity() {
     }
 
     /**
-     * Makes appropriate view model call for logging in user
+     * Makes appropriate view model call for logging in User
      */
     private fun handleLogin() {
         signInButton.setOnClickListener {
-            moveTo(HomeActivity::class.java)
-            finish()
-//            val userNameText = userName.text.toString()
-//            if (areCredsValid(userNameText)) {
-//
-//                loader = loader()
-//                loader?.show()
-//
-//                disposeBag.add(userViewModel.login(userNameText)
-//                        .subscribeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(userViewModel::handleSuccess, userViewModel::handleFailure))
-//            } else toast(getString(R.string.missing_fields))
+            val userNameText = userName.text.toString()
+            if (areCredsValid(userNameText)) {
+
+                loader = loader()
+                loader?.show()
+
+                disposeBag.add(userViewModel.login(userNameText)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe(userViewModel::handleSuccess, userViewModel::handleFailure))
+            } else toast(getString(R.string.missing_fields))
         }
     }
 
     /**
-     * Makes appropriate view model call for signing up user
+     * Makes appropriate view model call for signing up User
      */
     private fun handleRegister() {
         signInButton.setOnClickListener {
             val userNameText = userName.text.toString()
             val userEmailText = userEmail.text.toString()
-            if (areCredsValid(userNameText, userEmailText)) {
+            if (areCredsValid(userNameText, userEmailText) && isEmailValid(userEmailText)) {
 
                 loader = loader()
                 loader?.show()
@@ -123,7 +125,8 @@ class LoginRegActivity : BaseActivity() {
                         loader?.show()
                     } else hide(loader!!)
 
-                    if (nextActivity != null) moveTo(nextActivity)
+                    if (nextActivity != null)
+                        moveTo(nextActivity); finish()
                 }
 
         val toastDisposable = userViewModel

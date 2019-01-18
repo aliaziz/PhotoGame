@@ -4,8 +4,10 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
 import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
+import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -14,9 +16,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_upload_pic.*
 import kotlinx.android.synthetic.main.fragment_upload_pic.view.*
@@ -29,6 +33,7 @@ import java.io.ByteArrayOutputStream
 class UploadPicFrag : Fragment() {
     private val captureImage = 1
     private var imageString: String? = null
+    private val disposeBag = CompositeDisposable()
     private lateinit var gamingViewModel: GamingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +49,20 @@ class UploadPicFrag : Fragment() {
         return view
     }
 
+    @SuppressLint("LogNotTimber")
     private fun uploadPicData() {
         if (imageString != null && caption.text.isNotBlank()) {
-            gamingViewModel.uploadPic(null)
+            val gamingModel =
+                    GameUploadDetails(imageString!!,
+                            caption.text.toString(),
+                            null, null, null)
+            disposeBag.add(
+                    gamingViewModel.uploadPic(gamingModel)
                     .observeOn(Schedulers.io())
-                    .subscribe()
+                    .subscribe({
+                        requireContext().toast("Uploaded successfully")},
+                            { Log.d(this.tag, it.localizedMessage)}))
+
         } else requireContext().toast(ErrorMessages.INVALID_CREDENTIALS.name)
     }
 

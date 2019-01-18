@@ -67,3 +67,13 @@ fun Activity.moveTo(newActivity: Class<*>, vararg extras: Pair<String, Serializa
     }
     startActivity(intent)
 }
+
+/**
+ * Simple email validator
+ * @param email
+ *
+ * @return [Boolean]
+ */
+fun isEmailValid(email: String): Boolean =
+    (email.contains("@") && email.contains("."))
+

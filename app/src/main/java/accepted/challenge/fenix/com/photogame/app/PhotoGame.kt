@@ -25,7 +25,7 @@ class PhotoGame: Application() {
     /**
      * Creates api interface
      *
-     * @return [ApiInterface]
+     * @return [ApiService]
      */
     fun api(context: Context): ApiService {
         val retrofit = Retrofit.Builder()

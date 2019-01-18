@@ -7,10 +7,15 @@ import android.arch.lifecycle.ViewModel
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 
-class UserViewModel(val userRepository: UserRepository): ViewModel() {
+class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     var waitEventsSubscription = PublishSubject.create<Pair<Boolean, Class<*>?>>()
     var toastHandler = PublishSubject.create<ErrorMessages>()
+    var isLoggedIn: Boolean
+        get() = userRepository.isLoggedIn
+        private set(value) {
+            userRepository.isLoggedIn = value
+        }
 
     /**
      * Login User
@@ -19,17 +24,17 @@ class UserViewModel(val userRepository: UserRepository): ViewModel() {
      *
      * @return [Single]
      */
-    fun login(userName: String): Single<Boolean> = Single.create {  }
+    fun login(userName: String): Single<Boolean> = userRepository.login(userName)
 
     /**
-     * Register user
+     * Register User
      *
      * @param userName
      * @param userEmail
      *
      * @return [Single]
      */
-    fun register(userName: String, userEmail: String): Single<Boolean> = Single.create {  }
+    fun register(userName: String, userEmail: String): Single<Boolean> = userRepository.signUp(userName, userEmail)
 
     /**
      * Handles success response on logging in
@@ -49,5 +54,10 @@ class UserViewModel(val userRepository: UserRepository): ViewModel() {
      */
     fun handleFailure(error: Throwable) {
         waitEventsSubscription.onNext(Pair(false, null))
+    }
+
+    fun logOut() {
+        userRepository.userData = null
+        isLoggedIn = false
     }
 }

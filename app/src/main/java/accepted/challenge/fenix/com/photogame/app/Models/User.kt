@@ -1,5 +1,7 @@
 package accepted.challenge.fenix.com.photogame.app.Models
 
-class User(private val userName: String,
-           private val token: String,
-           private val userEmail: String)
+import com.google.gson.annotations.SerializedName
+
+class User(@SerializedName("username") val userName: String,
+           @SerializedName("api_token") val token: String,
+           @SerializedName("email") val userEmail: String)

@@ -10,7 +10,7 @@ class PrefManager(private val pref: SharedPreferences,
     private val editor: SharedPreferences.Editor = pref.edit()
 
     /**
-     * Current user
+     * Current User
      */
     var user: User?
         get() {
