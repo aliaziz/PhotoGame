@@ -19,4 +19,8 @@
     <string name="enter_caption">Enter caption</string>
     <string name="enter_description">Enter description</string>
     <string name="enter_address">Enter address</string>
+    <string name="tap_camera">Camera pic to capture picture</string>
+    <string name="uploading">Uploading...</string>
+    <string name="uploaded">Uploaded successfully</string>
+    <string name="error_uploading">Error occured while uploading</string>
 </resources>

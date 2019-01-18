@@ -1,6 +1,7 @@
 package accepted.challenge.fenix.com.photogame
 
 import accepted.challenge.fenix.com.photogame.Domain.areCredsValid
+import accepted.challenge.fenix.com.photogame.Domain.isEmailValid
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -17,5 +18,11 @@ class PhotoGameUnitTest {
     @Test
     fun validatesWrongFields() {
         assertFalse(areCredsValid(""))
+    }
+
+    @Test
+    fun validatesEmail() {
+        assertTrue(isEmailValid("a@c.com"))
+        assertFalse(isEmailValid("abcom"))
     }
 }

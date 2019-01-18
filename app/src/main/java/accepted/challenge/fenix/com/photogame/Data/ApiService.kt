@@ -23,5 +23,6 @@ interface ApiService {
                   @Field("caption") caption: String,
                   @Field("description") description: String,
                   @Field("category") category: String,
-                  @Field("location") location: String): Call<ApiMessageResponse>
+                  @Field("location") location: String,
+                  @Field("api_token") token: String): Call<ApiMessageResponse>
 }

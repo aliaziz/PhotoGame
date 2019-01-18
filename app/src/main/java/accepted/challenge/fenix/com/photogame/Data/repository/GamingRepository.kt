@@ -3,6 +3,7 @@ package accepted.challenge.fenix.com.photogame.Data.repository
 import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.model.ApiMessageResponse
 import accepted.challenge.fenix.com.photogame.Domain.Constants
+import accepted.challenge.fenix.com.photogame.Domain.PrefManager
 import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
 import io.reactivex.Single
 import io.realm.Realm
@@ -11,7 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GamingRepository(private val apiService: ApiService,
-                       private val realm: Realm) {
+                       private val realm: Realm,
+                       private val prefManager: PrefManager) {
 
     /**
      * Upload picture data
@@ -27,7 +29,8 @@ class GamingRepository(private val apiService: ApiService,
                     gameUploadDetails.caption,
                     gameUploadDetails.description?: "",
                     gameUploadDetails.category?: "",
-                    gameUploadDetails.location?: ""
+                    gameUploadDetails.location?: "",
+                    prefManager.user?.token?: ""
             ).enqueue(object: Callback<ApiMessageResponse> {
                 override fun onFailure(call: Call<ApiMessageResponse>, t: Throwable) {
                     emitter.onError(t)

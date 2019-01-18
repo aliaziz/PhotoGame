@@ -63,6 +63,7 @@ class PhotoGame: Application() {
             PrefManager(providePref(context), provideGson())
 
     fun getRealm() = Realm.getDefaultInstance()!!
+
 }
 
 val app: PhotoGame = PhotoGame()

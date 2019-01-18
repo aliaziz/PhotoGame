@@ -1,8 +1,7 @@
 package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 
-import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.toast
+import accepted.challenge.fenix.com.photogame.Domain.*
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
@@ -20,6 +19,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.beardedhen.androidbootstrap.BootstrapDropDown
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_upload_pic.*
@@ -33,7 +34,6 @@ import java.io.ByteArrayOutputStream
 class UploadPicFrag : Fragment() {
     private val captureImage = 1
     private var imageString: String? = null
-    private val disposeBag = CompositeDisposable()
     private lateinit var gamingViewModel: GamingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,23 +46,35 @@ class UploadPicFrag : Fragment() {
         val view = inflater.inflate(R.layout.fragment_upload_pic, container, false)
         view.cameraId.setOnClickListener { dispatchTakePictureIntent() }
         view.uploadPic.setOnClickListener { uploadPicData() }
+        view.category.setOnDropDownItemClickListener { _, _, id ->
+            view
+            view.category.text = view.category.dropdownData[id]
+        }
+        requireContext().toast(getString(R.string.tap_camera))
         return view
     }
 
     @SuppressLint("LogNotTimber")
     private fun uploadPicData() {
-        if (imageString != null && caption.text.isNotBlank()) {
+        val captionText = caption.text.toString()
+        val descriptionText = description.text.toString()
+        val categoryText = category.text.toString()
+        val locationText = location.text.toString()
+
+        if (imageString != null && captionText.isNotBlank()) {
             val gamingModel =
                     GameUploadDetails(imageString!!,
-                            caption.text.toString(),
-                            null, null, null)
-            disposeBag.add(
-                    gamingViewModel.uploadPic(gamingModel)
-                    .observeOn(Schedulers.io())
-                    .subscribe({
-                        requireContext().toast("Uploaded successfully")},
-                            { Log.d(this.tag, it.localizedMessage)}))
+                            captionText,
+                            descriptionText,
+                            categoryText,
+                            locationText)
 
+            requireContext().toast(getString(R.string.uploading))
+
+            Intent(requireContext(), UploadService::class.java).also { intent ->
+                intent.putExtra(MODEL_DATA_KEY, gamingModel)
+                requireContext().startService(intent)
+            }
         } else requireContext().toast(ErrorMessages.INVALID_CREDENTIALS.name)
     }
 

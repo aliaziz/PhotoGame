@@ -13,7 +13,8 @@ class GamingViewModelFactory(private val context: Context): ViewModelProvider.Fa
         if (modelClass.isAssignableFrom(GamingViewModel::class.java)) {
             return GamingViewModel(GamingRepository(
                     app.api(context),
-                    app.getRealm())) as T
+                    app.getRealm(),
+                    app.providePrefManager(context))) as T
         } else throw IllegalStateException("Class not found")
     }
 }
