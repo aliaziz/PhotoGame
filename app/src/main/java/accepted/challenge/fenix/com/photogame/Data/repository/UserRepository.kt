@@ -4,7 +4,7 @@ import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.model.ApiDataResponse
 import accepted.challenge.fenix.com.photogame.app.Models.User
 import accepted.challenge.fenix.com.photogame.Domain.PrefManager
-import accepted.challenge.fenix.com.photogame.app.Models.UserResponse
+import accepted.challenge.fenix.com.photogame.Data.model.UserResponse
 import io.reactivex.Single
 import io.realm.Realm
 import retrofit2.Call

@@ -2,6 +2,7 @@ package accepted.challenge.fenix.com.photogame.Domain
 
 class Constants {
     companion object {
-        val SUCCESS_MESSAGE = "Photo uploaded successfully"
+        const val SUCCESS_UPLOAD = "Photo uploaded successfully"
+        const val SUCCESS_MESSAGE = "success"
     }
 }

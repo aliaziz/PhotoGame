@@ -6,7 +6,6 @@ import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.app
 import android.app.IntentService
 import android.content.Intent
-import io.reactivex.disposables.CompositeDisposable
 
 const val MODEL_DATA_KEY = "gamingViewModel"
 
