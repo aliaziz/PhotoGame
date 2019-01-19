@@ -4,6 +4,7 @@ import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
 import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
 import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
 import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
 import io.reactivex.Single
@@ -33,6 +34,9 @@ class GamingViewModel(private val gamingRepository: GamingRepository): ViewModel
     fun likePic() { updateGamePhoto(GameUpdateType.LIKE) }
 
     fun dislikePic() { updateGamePhoto(GameUpdateType.DISLIKE) }
+
+    fun getScores(): Single<Array<LeaderShipModel>>
+            = gamingRepository.getLeadersResults()
 
     /**
      * General function called to update game data

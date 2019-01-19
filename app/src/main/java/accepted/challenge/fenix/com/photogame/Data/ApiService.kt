@@ -1,9 +1,6 @@
 package accepted.challenge.fenix.com.photogame.Data
 
-import accepted.challenge.fenix.com.photogame.Data.model.ApiDataResponse
-import accepted.challenge.fenix.com.photogame.Data.model.ApiMessageResponse
-import accepted.challenge.fenix.com.photogame.Data.model.PhotoResponse
-import accepted.challenge.fenix.com.photogame.Data.model.UserResponse
+import accepted.challenge.fenix.com.photogame.Data.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -44,4 +41,8 @@ interface ApiService {
     @POST("view")
     fun viewedPic(@Field("id") photoId: Int,
                   @Field("api_token") token: String): Call<ApiMessageResponse>
+
+    @GET("leadership-board")
+    fun getLeadershipBoard(@Query("api_token") token: String)
+            : Call<ApiDataResponse<LeadershipResponse>>
 }

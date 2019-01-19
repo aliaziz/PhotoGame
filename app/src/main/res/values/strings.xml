@@ -23,4 +23,8 @@
     <string name="uploading">Uploading...</string>
     <string name="uploaded">Uploaded successfully</string>
     <string name="error_uploading">Error occured while uploading</string>
+    <string name="name">Name</string>
+    <string name="views">Views</string>
+    <string name="dislikes">Dislikes</string>
+    <string name="likes">Likes</string>
 </resources>

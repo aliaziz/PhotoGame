@@ -3,11 +3,13 @@ package accepted.challenge.fenix.com.photogame.Data.repository
 import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.model.ApiDataResponse
 import accepted.challenge.fenix.com.photogame.Data.model.ApiMessageResponse
+import accepted.challenge.fenix.com.photogame.Data.model.LeadershipResponse
 import accepted.challenge.fenix.com.photogame.Data.model.PhotoResponse
 import accepted.challenge.fenix.com.photogame.Domain.Constants
 import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
 import accepted.challenge.fenix.com.photogame.Domain.PrefManager
 import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import io.reactivex.Single
 import io.realm.Realm
 import retrofit2.Call
@@ -102,6 +104,33 @@ class GamingRepository(private val apiService: ApiService,
                     .flatMap { viewedPic(photoId) }
 
     /**
+     * Fetches leading players scores
+     *
+     * @return [Single]
+     */
+    fun getLeadersResults(): Single<Array<LeaderShipModel>> {
+        return Single.create { emitter ->
+            token?.let { _token ->
+                apiService.getLeadershipBoard(_token)
+                        .enqueue(object : Callback<ApiDataResponse<LeadershipResponse>> {
+                            override fun onFailure(call: Call<ApiDataResponse<LeadershipResponse>>, t: Throwable) {
+                                emitter.onError(t)
+                            }
+
+                            override fun onResponse(call: Call<ApiDataResponse<LeadershipResponse>>, response: Response<ApiDataResponse<LeadershipResponse>>) {
+                                if (response.isSuccessful) {
+                                    response.body()?.response?.leadership?.let {
+                                        emitter.onSuccess(it)
+                                    }
+                                } else emitter.onError(Throwable())
+                            }
+
+                        })
+            }
+        }
+    }
+
+    /**
      * Updates photos views
      *
      * @param photoId [String]
@@ -122,9 +151,9 @@ class GamingRepository(private val apiService: ApiService,
      */
     private fun makeCallback(token: String, photoId: Int, gameUpdateType: GameUpdateType): Call<ApiMessageResponse> {
         return when (gameUpdateType) {
-            GameUpdateType.DISLIKE -> apiService.dislikePic(photoId, token)
+            GameUpdateType.DISLIKE -> apiService.likePic(photoId, token)
             GameUpdateType.LIKE -> apiService.dislikePic(photoId, token)
-            GameUpdateType.VIEW -> apiService.dislikePic(photoId, token)
+            GameUpdateType.VIEW -> apiService.viewedPic(photoId, token)
         }
     }
 

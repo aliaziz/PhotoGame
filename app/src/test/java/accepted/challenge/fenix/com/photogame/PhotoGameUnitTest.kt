@@ -2,6 +2,8 @@ package accepted.challenge.fenix.com.photogame
 
 import accepted.challenge.fenix.com.photogame.Domain.areCredsValid
 import accepted.challenge.fenix.com.photogame.Domain.isEmailValid
+import accepted.challenge.fenix.com.photogame.app.ViewModel.UserViewModel
+import android.arch.lifecycle.ViewModelProviders
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -24,5 +26,8 @@ class PhotoGameUnitTest {
     fun validatesEmail() {
         assertTrue(isEmailValid("a@c.com"))
         assertFalse(isEmailValid("abcom"))
+    }
+
+    fun loginSuccess() {
     }
 }
