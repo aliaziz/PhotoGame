@@ -2,10 +2,13 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 
 import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
+import accepted.challenge.fenix.com.photogame.Domain.hide
+import accepted.challenge.fenix.com.photogame.Domain.loader
 import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
+import android.app.AlertDialog
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,6 +28,7 @@ class PlayGameFrag : Fragment() {
 
     private lateinit var gamingViewModel: GamingViewModel
     private val disposeBag = CompositeDisposable()
+    private var loadDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,7 @@ class PlayGameFrag : Fragment() {
                         .get(GamingViewModel::class.java)
 
         registerListeners()
+        loadDialog = requireActivity().loader()
     }
 
     private fun registerListeners() {
@@ -61,6 +66,11 @@ class PlayGameFrag : Fragment() {
 
         disposeBag.add(gamingViewModel.messageSubscription.subscribe {
             requireContext().toast(it)
+        })
+
+        disposeBag.add(gamingViewModel.showLoader.subscribe {
+            if (it) loadDialog?.show()
+            else { loadDialog?.let { dialog -> hide(dialog) } }
         })
     }
 

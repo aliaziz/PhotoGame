@@ -5,7 +5,8 @@ enum class ErrorMessages {
     LOAD_ERROR,
     NO_MORE_DATA,
     LIKE_ERROR,
-    DISLIKE_ERROR
+    DISLIKE_ERROR,
+    MISSING_DATA
 }
 
 enum class GeneralMessages {

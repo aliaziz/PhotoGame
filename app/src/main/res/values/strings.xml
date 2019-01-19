@@ -11,7 +11,7 @@
     <string name="or">Or</string>
     <string name="enter_email">Enter email</string>
     <string name="back">Back to login</string>
-    <string name="missing_fields">All fields are required</string>
+    <string name="missing_fields">Please check that input is correct</string>
     <string name="upload_pic">Upload Pic</string>
     <string name="play">Play</string>
     <string name="leadership">Leadership board</string>
@@ -19,10 +19,10 @@
     <string name="enter_caption">Enter caption</string>
     <string name="enter_description">Enter description</string>
     <string name="enter_address">Enter address</string>
-    <string name="tap_camera">Camera pic to capture picture</string>
+    <string name="tap_camera">Tap camera to capture picture</string>
     <string name="uploading">Uploading...</string>
     <string name="uploaded">Uploaded successfully</string>
-    <string name="error_uploading">Error occured while uploading</string>
+    <string name="error_uploading">Error occurred while uploading</string>
     <string name="name">Name</string>
     <string name="views">Views</string>
     <string name="dislikes">Dislikes</string>

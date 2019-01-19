@@ -75,7 +75,7 @@ class UploadPicFrag : Fragment() {
                 intent.putExtra(MODEL_DATA_KEY, gamingModel)
                 requireContext().startService(intent)
             }
-        } else requireContext().toast(ErrorMessages.INVALID_CREDENTIALS.name)
+        } else requireContext().toast(ErrorMessages.MISSING_DATA.name)
     }
 
     private fun dispatchTakePictureIntent() {
