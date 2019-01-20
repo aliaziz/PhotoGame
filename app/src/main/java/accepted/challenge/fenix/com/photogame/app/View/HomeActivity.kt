@@ -1,6 +1,6 @@
 package accepted.challenge.fenix.com.photogame.app.View
 
-import accepted.challenge.fenix.com.photogame.Domain.UploadBroadcastReceiver
+import accepted.challenge.fenix.com.photogame.Domain.notifications.UploadBroadcastReceiver
 import accepted.challenge.fenix.com.photogame.Domain.moveTo
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.LeadershipFrag
@@ -9,18 +9,21 @@ import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.UploadPicFrag
 import accepted.challenge.fenix.com.photogame.app.ViewModel.UserViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.UserViewModelFactory
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var userFactory: UserViewModelFactory
     private lateinit var userViewModel: UserViewModel
     private lateinit var uploadBroadcastReceiver: UploadBroadcastReceiver
 
@@ -43,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
@@ -55,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUp() {
-        val userFactory = UserViewModelFactory(this)
         uploadBroadcastReceiver = UploadBroadcastReceiver()
 
         registerReceiver(uploadBroadcastReceiver,

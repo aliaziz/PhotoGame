@@ -2,9 +2,9 @@ package accepted.challenge.fenix.com.photogame.Data.repository
 
 import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.model.*
-import accepted.challenge.fenix.com.photogame.Domain.Constants
-import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
-import accepted.challenge.fenix.com.photogame.Domain.PrefManager
+import accepted.challenge.fenix.com.photogame.Domain.managers.Constants
+import accepted.challenge.fenix.com.photogame.Domain.managers.GameUpdateType
+import accepted.challenge.fenix.com.photogame.Domain.managers.PrefManager
 import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import io.reactivex.Single
@@ -12,8 +12,9 @@ import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-open class GamingRepository(private val apiService: ApiService,
+open class GamingRepository @Inject constructor(private val apiService: ApiService,
                        private val realm: Realm,
                        private val prefManager: PrefManager) {
 
@@ -94,7 +95,6 @@ open class GamingRepository(private val apiService: ApiService,
      */
     fun likedPic(photoId: Int): Single<Boolean> =
             updateGame(makeCallback(token!!, photoId, GameUpdateType.LIKE))
-                    .flatMap { viewedPic(photoId) }
 
     /**
      * Updates photos dislikes
@@ -105,7 +105,6 @@ open class GamingRepository(private val apiService: ApiService,
      */
     fun dislikedPic(photoId: Int): Single<Boolean> =
             updateGame(makeCallback(token!!, photoId, GameUpdateType.DISLIKE))
-                    .flatMap { viewedPic(photoId) }
 
     /**
      * Fetches leading players scores
@@ -173,16 +172,6 @@ open class GamingRepository(private val apiService: ApiService,
     }
 
     /**
-     * Updates photos views
-     *
-     * @param photoId [String]
-     *
-     * @return [Single]
-     */
-    private fun viewedPic(photoId: Int): Single<Boolean> =
-            updateGame(makeCallback(token!!, photoId, GameUpdateType.VIEW))
-
-    /**
      * Builds call using [token], [photoId] and [gameUpdateType]
      *
      * @param token
@@ -195,7 +184,6 @@ open class GamingRepository(private val apiService: ApiService,
         return when (gameUpdateType) {
             GameUpdateType.DISLIKE -> apiService.likePic(photoId, token)
             GameUpdateType.LIKE -> apiService.dislikePic(photoId, token)
-            GameUpdateType.VIEW -> apiService.viewedPic(photoId, token)
         }
     }
 
@@ -214,7 +202,7 @@ open class GamingRepository(private val apiService: ApiService,
                 override fun onResponse(call: Call<ApiMessageResponse>, response: Response<ApiMessageResponse>) {
                     if (response.isSuccessful && response.body()?.message == Constants.SUCCESS_MESSAGE)
                         emitter.onSuccess(true)
-                    else emitter.onError(Throwable())
+                    else emitter.onSuccess(false)
                 }
 
             })

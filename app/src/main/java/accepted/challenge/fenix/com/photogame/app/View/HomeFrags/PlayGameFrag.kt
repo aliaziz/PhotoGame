@@ -1,10 +1,8 @@
 package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 
-import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.hide
-import accepted.challenge.fenix.com.photogame.Domain.loader
-import accepted.challenge.fenix.com.photogame.Domain.toast
+import accepted.challenge.fenix.com.photogame.Domain.*
+import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
@@ -16,9 +14,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
+import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_play_game.*
 import kotlinx.android.synthetic.main.fragment_play_game.view.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -26,11 +26,15 @@ import kotlinx.android.synthetic.main.fragment_play_game.view.*
  */
 class PlayGameFrag : Fragment() {
 
+    @Inject
+    lateinit var gamingViewModelFactory:GamingViewModelFactory
+
     private lateinit var gamingViewModel: GamingViewModel
     private val disposeBag = CompositeDisposable()
     private var loadDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(requireActivity())
         super.onCreate(savedInstanceState)
         setup()
     }
@@ -44,7 +48,6 @@ class PlayGameFrag : Fragment() {
     }
 
     private fun setup() {
-        val gamingViewModelFactory = GamingViewModelFactory(requireContext())
         gamingViewModel =
                 ViewModelProviders
                         .of(this, gamingViewModelFactory)
@@ -61,7 +64,7 @@ class PlayGameFrag : Fragment() {
 
     private fun subscriptions() {
         disposeBag.add(gamingViewModel.nextPic.subscribe(::loadPic) {
-            requireContext().toast(ErrorMessages.LOAD_ERROR.name)
+            requireContext().toast(Helpers.message(ErrorMessages.LOAD_ERROR))
         })
 
         disposeBag.add(gamingViewModel.messageSubscription.subscribe {

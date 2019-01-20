@@ -1,8 +1,9 @@
 package accepted.challenge.fenix.com.photogame.app.ViewModel
 
 import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
-import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
+import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
+import accepted.challenge.fenix.com.photogame.Domain.managers.GameUpdateType
+import accepted.challenge.fenix.com.photogame.Domain.Helpers
 import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import android.annotation.SuppressLint
@@ -11,8 +12,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
-class GamingViewModel(private val gamingRepository: GamingRepository) : ViewModel() {
+class GamingViewModel @Inject constructor(private val gamingRepository: GamingRepository) : ViewModel() {
 
     private var remoteGameUploadDetails: ArrayList<RemoteGameUploadDetails>? = ArrayList()
 
@@ -51,7 +53,6 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
                 val updateMethod = when (gameUpdateType) {
                     GameUpdateType.LIKE -> gamingRepository.likedPic(gameDetails[0].photoId)
                     GameUpdateType.DISLIKE -> gamingRepository.dislikedPic(gameDetails[0].photoId)
-                    else -> Single.just(false)
                 }
 
                 updateMethod
@@ -60,11 +61,12 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
                         .subscribe({
                             moveToNextDetail(gameDetails)
 
-                            if (!it) messageSubscription.onNext(ErrorMessages.LIKE_ERROR.name)
+                            if (!it)
+                                messageSubscription.onNext(Helpers.message(ErrorMessages.LIKE_ERROR))
 
                         }, {
                             moveToNextDetail(gameDetails)
-                            messageSubscription.onNext(ErrorMessages.LIKE_ERROR.name)
+                            messageSubscription.onNext(Helpers.message(ErrorMessages.LIKE_ERROR))
                         }
                         )
             }
@@ -78,7 +80,7 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
 
         if (remoteGameDetails.isNotEmpty())
             loadNextPic(remoteGameDetails[0].pic)
-        else messageSubscription.onNext(ErrorMessages.NO_MORE_DATA.name)
+        else messageSubscription.onNext(Helpers.message(ErrorMessages.NO_MORE_DATA))
     }
 
     @SuppressLint("CheckResult")
@@ -91,9 +93,9 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
                         remoteGameUploadDetails?.addAll(pics)
                         loadNextPic(pics[0].pic)
 
-                    } else messageSubscription.onNext(ErrorMessages.NO_MORE_DATA.name)
+                    } else messageSubscription.onNext(Helpers.message(ErrorMessages.NO_MORE_DATA))
 
-                }, { messageSubscription.onNext(ErrorMessages.LOAD_ERROR.name) })
+                }, { messageSubscription.onNext(Helpers.message(ErrorMessages.LOAD_ERROR)) })
     }
 
     private fun loadNextPic(url: String) {

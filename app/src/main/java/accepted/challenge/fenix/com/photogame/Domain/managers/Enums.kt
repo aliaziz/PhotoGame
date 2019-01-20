@@ -1,4 +1,4 @@
-package accepted.challenge.fenix.com.photogame.Domain
+package accepted.challenge.fenix.com.photogame.Domain.managers
 
 enum class ErrorMessages {
     INVALID_CREDENTIALS,
@@ -18,5 +18,5 @@ enum class LoginType {
 }
 
 enum class GameUpdateType {
-    LIKE, DISLIKE, VIEW
+    LIKE, DISLIKE
 }

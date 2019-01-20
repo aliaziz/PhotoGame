@@ -1,15 +1,11 @@
 package accepted.challenge.fenix.com.photogame
 
 import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
-import accepted.challenge.fenix.com.photogame.Domain.areCredsValid
-import accepted.challenge.fenix.com.photogame.Domain.isEmailValid
+import accepted.challenge.fenix.com.photogame.Domain.Helpers
 import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
-import accepted.challenge.fenix.com.photogame.app.app
-import android.content.Context
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.mockito.Mockito.*
-
-import org.junit.Assert.*
 import org.mockito.Mockito
 
 class PhotoGameUnitTest {
@@ -18,18 +14,18 @@ class PhotoGameUnitTest {
     fun validatesCreds() {
         val name = "ali"
         val email = "email"
-        assertTrue(areCredsValid(name, email))
+        assertTrue(Helpers.areCredsValid(name, email))
     }
 
     @Test
     fun validatesWrongFields() {
-        assertFalse(areCredsValid(""))
+        assertFalse(Helpers.areCredsValid(""))
     }
 
     @Test
     fun validatesEmail() {
-        assertTrue(isEmailValid("a@c.com"))
-        assertFalse(isEmailValid("abcom"))
+        assertTrue(Helpers.isEmailValid("a@c.com"))
+        assertFalse(Helpers.isEmailValid("abcom"))
     }
 
     @Test

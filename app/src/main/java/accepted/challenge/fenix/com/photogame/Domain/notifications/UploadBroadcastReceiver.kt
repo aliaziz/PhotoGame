@@ -1,27 +1,27 @@
-package accepted.challenge.fenix.com.photogame.Domain
+package accepted.challenge.fenix.com.photogame.Domain.notifications
 
 import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
-import accepted.challenge.fenix.com.photogame.app.app
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.NetworkInfo
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 
 class UploadBroadcastReceiver : BroadcastReceiver() {
 
+    @Inject
+    lateinit var gameRepo: GamingRepository
+
     override fun onReceive(context: Context?, intent: Intent?) {
+        AndroidInjection.inject(this, context)
+
         (intent?.extras?.get("networkInfo") as NetworkInfo).let { it ->
             if (it.state.name == "CONNECTED") {
-                val gameRepo = GamingRepository(
-                        app.api(context!!),
-                        app.getRealm(),
-                        app.providePrefManager(context)
-                )
-
                 if (gameRepo.hasPendingUpload)
                     gameRepo.getSavedUpload().forEach { remoteData ->
-                        gameRepo.upload(remoteData)
+                        gameRepo.upload(remoteData).subscribe()
                     }
             }
 

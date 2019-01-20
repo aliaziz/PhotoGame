@@ -1,4 +1,4 @@
-package accepted.challenge.fenix.com.photogame.Domain
+package accepted.challenge.fenix.com.photogame.Domain.managers
 
 import accepted.challenge.fenix.com.photogame.app.Models.User
 import android.content.SharedPreferences

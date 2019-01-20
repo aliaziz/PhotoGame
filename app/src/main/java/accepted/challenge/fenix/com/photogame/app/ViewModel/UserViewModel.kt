@@ -1,7 +1,7 @@
 package accepted.challenge.fenix.com.photogame.app.ViewModel
 
 import accepted.challenge.fenix.com.photogame.Data.repository.UserRepository
-import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
+import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
 import accepted.challenge.fenix.com.photogame.app.View.HomeActivity
 import android.arch.lifecycle.ViewModel
 import io.reactivex.Single
@@ -34,7 +34,8 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
      *
      * @return [Single]
      */
-    fun register(userName: String, userEmail: String): Single<Boolean> = userRepository.signUp(userName, userEmail)
+    fun register(userName: String, userEmail: String): Single<Boolean>
+            = userRepository.signUp(userName, userEmail)
 
     /**
      * Handles success response on logging in
@@ -44,7 +45,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun handleSuccess(isLoggedIn: Boolean) {
         if (isLoggedIn)
             waitEventsSubscription.onNext(Pair(false, HomeActivity::class.java))
-        else toastHandler.onNext(ErrorMessages.INVALID_CREDENTIALS)
+        else handleFailure(Throwable())
     }
 
     /**
@@ -53,6 +54,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
      * @param error
      */
     fun handleFailure(error: Throwable) {
+        toastHandler.onNext(ErrorMessages.INVALID_CREDENTIALS)
         waitEventsSubscription.onNext(Pair(false, null))
     }
 

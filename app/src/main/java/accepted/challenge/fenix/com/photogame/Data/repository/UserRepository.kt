@@ -3,15 +3,16 @@ package accepted.challenge.fenix.com.photogame.Data.repository
 import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.model.ApiDataResponse
 import accepted.challenge.fenix.com.photogame.app.Models.User
-import accepted.challenge.fenix.com.photogame.Domain.PrefManager
+import accepted.challenge.fenix.com.photogame.Domain.managers.PrefManager
 import accepted.challenge.fenix.com.photogame.Data.model.UserResponse
 import io.reactivex.Single
 import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class UserRepository(private val api: ApiService,
+class UserRepository @Inject constructor(private val api: ApiService,
                      private val prefManager: PrefManager,
                      private val realm: Realm) {
 

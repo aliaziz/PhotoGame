@@ -23,9 +23,12 @@ class LeadershipAdapter(private val scores: ArrayList<LeaderShipModel>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text = scores[position].userId
-        holder.dislikes.text = scores[position].dislikes.toString()
-        holder.likes.text = scores[position].likes.toString()
-        holder.views.text = scores[position].views.toString()
+        val dislikes = scores[position].dislikes
+        val likes = scores[position].likes
+        val views = dislikes + likes
+        holder.dislikes.text = dislikes.toString()
+        holder.likes.text = likes.toString()
+        holder.views.text = views.toString()
     }
 
     class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {

@@ -1,6 +1,7 @@
 package accepted.challenge.fenix.com.photogame.app.View
 
 import accepted.challenge.fenix.com.photogame.Domain.*
+import accepted.challenge.fenix.com.photogame.Domain.managers.LoginType
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.View.Base.BaseActivity
 import accepted.challenge.fenix.com.photogame.app.ViewModel.UserViewModel
@@ -8,16 +9,21 @@ import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.Use
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
+import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
+import javax.inject.Inject
 
 class LoginRegActivity : BaseActivity() {
 
+    @Inject
+    lateinit var loginFactory:UserViewModelFactory
     private lateinit var userViewModel: UserViewModel
     private val disposeBag = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setupView()
 
@@ -70,7 +76,7 @@ class LoginRegActivity : BaseActivity() {
     private fun handleLogin() {
         signInButton.setOnClickListener {
             val userNameText = userName.text.toString()
-            if (areCredsValid(userNameText)) {
+            if (Helpers.areCredsValid(userNameText)) {
 
                 loader = loader()
                 loader?.show()
@@ -89,7 +95,7 @@ class LoginRegActivity : BaseActivity() {
         signInButton.setOnClickListener {
             val userNameText = userName.text.toString()
             val userEmailText = userEmail.text.toString()
-            if (areCredsValid(userNameText, userEmailText) && isEmailValid(userEmailText)) {
+            if (Helpers.areCredsValid(userNameText, userEmailText) && Helpers.isEmailValid(userEmailText)) {
 
                 loader = loader()
                 loader?.show()
@@ -102,7 +108,7 @@ class LoginRegActivity : BaseActivity() {
     }
 
     private fun setupView() {
-        val loginFactory = UserViewModelFactory(this)
+
         userViewModel = ViewModelProviders
                 .of(this, loginFactory)
                 .get(UserViewModel::class.java)
@@ -125,15 +131,18 @@ class LoginRegActivity : BaseActivity() {
                         loader?.show()
                     } else hide(loader!!)
 
-                    if (nextActivity != null)
-                        moveTo(nextActivity); finish()
+                    if (nextActivity != null) {
+                        moveTo(nextActivity)
+                            finish()
+                    }
+
                 }
 
         val toastDisposable = userViewModel
                 .toastHandler
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    toast(it.name)
+                    toast(Helpers.message(it))
                 }
 
         disposeBag.addAll(toastDisposable, disposable)

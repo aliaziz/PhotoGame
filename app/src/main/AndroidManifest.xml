@@ -33,7 +33,7 @@
         </activity>
 
         <service
-            android:name=".Domain.UploadService"
+            android:name=".Domain.notifications.UploadService"
             android:exported="false"/>
     </application>
 
