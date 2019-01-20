@@ -1,12 +1,14 @@
 package accepted.challenge.fenix.com.photogame.app
 
 import accepted.challenge.fenix.com.photogame.Data.ApiService
+import accepted.challenge.fenix.com.photogame.Domain.Constants
 import accepted.challenge.fenix.com.photogame.Domain.PrefManager
 import accepted.challenge.fenix.com.photogame.R
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.test.mock.MockContext
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,7 +31,7 @@ class PhotoGame: Application() {
      */
     fun api(context: Context): ApiService {
         val retrofit = Retrofit.Builder()
-                .baseUrl(context.getString(R.string.end_point))
+                .baseUrl(context.getString(R.string.end_point)?: Constants.MOCK_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(ApiService::class.java)

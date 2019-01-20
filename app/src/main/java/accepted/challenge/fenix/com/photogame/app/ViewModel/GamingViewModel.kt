@@ -3,11 +3,10 @@ package accepted.challenge.fenix.com.photogame.app.ViewModel
 import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
 import accepted.challenge.fenix.com.photogame.Domain.ErrorMessages
 import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
-import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
 
 class GamingViewModel(private val gamingRepository: GamingRepository) : ViewModel() {
 
-    private var gameUploadDetails: ArrayList<GameUploadDetails>? = ArrayList()
+    private var remoteGameUploadDetails: ArrayList<RemoteGameUploadDetails>? = ArrayList()
 
     var nextPic = PublishSubject.create<String>()
     var showLoader = PublishSubject.create<Boolean>()
@@ -27,16 +26,6 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
     fun init() {
         loadGamePics()
     }
-
-    /**
-     * Make repository call to upload player info
-     *
-     * @param gamingModel
-     *
-     * @return [Single]
-     */
-    fun uploadPic(gamingModel: GameUploadDetails): Single<Boolean>
-            = gamingRepository.upload(gamingModel)
 
     fun likePic() {
         showLoader.onNext(true)
@@ -56,7 +45,7 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
      * @param gameUpdateType [GameUpdateType]
      */
     private fun updateGamePhoto(gameUpdateType: GameUpdateType) {
-        gameUploadDetails?.let { gameDetails ->
+        remoteGameUploadDetails?.let { gameDetails ->
 
             if (gameDetails.size > 0) {
                 val updateMethod = when (gameUpdateType) {
@@ -82,13 +71,13 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
         }
     }
 
-    private fun moveToNextDetail(gameDetails: ArrayList<GameUploadDetails>) {
+    private fun moveToNextDetail(remoteGameDetails: ArrayList<RemoteGameUploadDetails>) {
         showLoader.onNext(false)
-        if (gameDetails.size >= 1)
-            gameUploadDetails?.removeAt(0)
+        if (remoteGameDetails.size >= 1)
+            remoteGameUploadDetails?.removeAt(0)
 
-        if (gameDetails.isNotEmpty())
-            loadNextPic(gameDetails[0].pic)
+        if (remoteGameDetails.isNotEmpty())
+            loadNextPic(remoteGameDetails[0].pic)
         else messageSubscription.onNext(ErrorMessages.NO_MORE_DATA.name)
     }
 
@@ -99,7 +88,7 @@ class GamingViewModel(private val gamingRepository: GamingRepository) : ViewMode
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pics ->
                     if (pics.isNotEmpty()) {
-                        gameUploadDetails?.addAll(pics)
+                        remoteGameUploadDetails?.addAll(pics)
                         loadNextPic(pics[0].pic)
 
                     } else messageSubscription.onNext(ErrorMessages.NO_MORE_DATA.name)

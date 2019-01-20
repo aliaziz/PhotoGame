@@ -1,14 +1,11 @@
 package accepted.challenge.fenix.com.photogame.Data.repository
 
 import accepted.challenge.fenix.com.photogame.Data.ApiService
-import accepted.challenge.fenix.com.photogame.Data.model.ApiDataResponse
-import accepted.challenge.fenix.com.photogame.Data.model.ApiMessageResponse
-import accepted.challenge.fenix.com.photogame.Data.model.LeadershipResponse
-import accepted.challenge.fenix.com.photogame.Data.model.PhotoResponse
+import accepted.challenge.fenix.com.photogame.Data.model.*
 import accepted.challenge.fenix.com.photogame.Domain.Constants
 import accepted.challenge.fenix.com.photogame.Domain.GameUpdateType
 import accepted.challenge.fenix.com.photogame.Domain.PrefManager
-import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import io.reactivex.Single
 import io.realm.Realm
@@ -16,28 +13,34 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GamingRepository(private val apiService: ApiService,
+open class GamingRepository(private val apiService: ApiService,
                        private val realm: Realm,
                        private val prefManager: PrefManager) {
 
     private val token: String?
         get() = prefManager.user?.token
 
+    var hasPendingUpload: Boolean
+        get() = prefManager.hasPendingUpload
+        private set(value) {
+            prefManager.hasPendingUpload = value
+        }
+
     /**
      * Upload picture data
      *
-     * @param gameUploadDetails
+     * @param remoteGameUploadDetails
      *
      * @return [Single]
      */
-    fun upload(gameUploadDetails: GameUploadDetails): Single<Boolean> {
+    fun upload(remoteGameUploadDetails: RemoteGameUploadDetails): Single<Boolean> {
         return Single.create { emitter ->
             apiService.uploadPic(
-                    gameUploadDetails.pic,
-                    gameUploadDetails.caption,
-                    gameUploadDetails.description ?: "",
-                    gameUploadDetails.category ?: "",
-                    gameUploadDetails.location ?: "",
+                    remoteGameUploadDetails.pic,
+                    remoteGameUploadDetails.caption,
+                    remoteGameUploadDetails.description ?: "",
+                    remoteGameUploadDetails.category ?: "",
+                    remoteGameUploadDetails.location ?: "",
                     prefManager.user?.token ?: ""
             ).enqueue(object : Callback<ApiMessageResponse> {
                 override fun onFailure(call: Call<ApiMessageResponse>, t: Throwable) {
@@ -45,9 +48,10 @@ class GamingRepository(private val apiService: ApiService,
                 }
 
                 override fun onResponse(call: Call<ApiMessageResponse>, response: Response<ApiMessageResponse>) {
-                    if (response.isSuccessful && response.body()?.message == Constants.SUCCESS_UPLOAD)
+                    if (response.isSuccessful && response.body()?.message == Constants.SUCCESS_UPLOAD) {
                         emitter.onSuccess(true)
-                    else emitter.onSuccess(false)
+                        hasPendingUpload = false
+                    } else emitter.onSuccess(false)
                 }
 
             })
@@ -59,7 +63,7 @@ class GamingRepository(private val apiService: ApiService,
      *
      * @return [Single]
      */
-    fun fetch(): Single<Array<GameUploadDetails>> {
+    fun fetch(): Single<Array<RemoteGameUploadDetails>> {
         return Single.create { emitter ->
             token?.let { _token ->
                 apiService.fetchPhotos(_token)
@@ -128,6 +132,44 @@ class GamingRepository(private val apiService: ApiService,
                         })
             }
         }
+    }
+
+    /**
+     * Saves pending remote upload
+     *
+     * @param remoteGameUploadDetails
+     */
+    fun saveUpload(remoteGameUploadDetails: RemoteGameUploadDetails) {
+        val localUploadDetails
+                = LocalGameUploadDetails(remoteGameUploadDetails.pic,
+                remoteGameUploadDetails.caption,
+                remoteGameUploadDetails.description,
+                remoteGameUploadDetails.category,
+                remoteGameUploadDetails.location)
+        hasPendingUpload = true
+        realm.beginTransaction()
+        realm.copyToRealmOrUpdate(localUploadDetails)
+        realm.commitTransaction()
+    }
+
+    /**
+     * Gets pending remote uploads
+     *
+     * @return [Array]<[RemoteGameUploadDetails]>
+     */
+    fun getSavedUpload(): ArrayList<RemoteGameUploadDetails> {
+        val results
+                = realm.where(LocalGameUploadDetails::class.java).findAll()
+        val remoteGameUploads = ArrayList<RemoteGameUploadDetails>()
+        results.forEach { localDetail ->
+            val gameUploadDetails = RemoteGameUploadDetails(localDetail.pic,
+                    localDetail.caption,
+                    localDetail.description,
+                    localDetail.category,
+                    localDetail.location)
+            remoteGameUploads.add(gameUploadDetails)
+        }
+        return  remoteGameUploads
     }
 
     /**

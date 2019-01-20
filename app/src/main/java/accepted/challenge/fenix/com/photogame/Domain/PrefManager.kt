@@ -27,8 +27,15 @@ class PrefManager(private val pref: SharedPreferences,
         }
         set(value) = editor.putBoolean(IS_LOGGED_IN, value).apply()
 
+    var hasPendingUpload: Boolean
+        get() {
+            return pref.getBoolean(HAS_PENDING_UPLOAD, false)
+        }
+        set(value) = editor.putBoolean(HAS_PENDING_UPLOAD, value).apply()
+
     companion object {
         const val USER_DATA = "current_user_data"
         const val IS_LOGGED_IN = "is_logged_in"
+        const val HAS_PENDING_UPLOAD = "has_pending_upload"
     }
 }

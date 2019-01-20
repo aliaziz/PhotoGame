@@ -1,5 +1,6 @@
 package accepted.challenge.fenix.com.photogame.app.View
 
+import accepted.challenge.fenix.com.photogame.Domain.UploadBroadcastReceiver
 import accepted.challenge.fenix.com.photogame.Domain.moveTo
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.LeadershipFrag
@@ -8,6 +9,9 @@ import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.UploadPicFrag
 import accepted.challenge.fenix.com.photogame.app.ViewModel.UserViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.UserViewModelFactory
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -18,6 +22,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var uploadBroadcastReceiver: UploadBroadcastReceiver
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -51,6 +56,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUp() {
         val userFactory = UserViewModelFactory(this)
+        uploadBroadcastReceiver = UploadBroadcastReceiver()
+
+        registerReceiver(uploadBroadcastReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         userViewModel = ViewModelProviders
                 .of(this, userFactory)
                 .get(UserViewModel::class.java)
@@ -68,5 +77,10 @@ class HomeActivity : AppCompatActivity() {
         userViewModel.logOut()
         moveTo(LoginRegActivity::class.java)
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(uploadBroadcastReceiver)
     }
 }

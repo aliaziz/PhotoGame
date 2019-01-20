@@ -3,7 +3,7 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 import accepted.challenge.fenix.com.photogame.Domain.*
 import accepted.challenge.fenix.com.photogame.R
-import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
 import android.annotation.SuppressLint
@@ -15,14 +15,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.beardedhen.androidbootstrap.BootstrapDropDown
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_upload_pic.*
 import kotlinx.android.synthetic.main.fragment_upload_pic.view.*
 import java.io.ByteArrayOutputStream
@@ -63,7 +58,7 @@ class UploadPicFrag : Fragment() {
 
         if (imageString != null && captionText.isNotBlank()) {
             val gamingModel =
-                    GameUploadDetails(imageString!!,
+                    RemoteGameUploadDetails(imageString!!,
                             captionText,
                             descriptionText,
                             categoryText,

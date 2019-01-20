@@ -1,5 +1,5 @@
 package accepted.challenge.fenix.com.photogame.Data.model
 
-import accepted.challenge.fenix.com.photogame.app.Models.GameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 
-class PhotoResponse(val photos: Array<GameUploadDetails>)
+class PhotoResponse(val photos: Array<RemoteGameUploadDetails>)

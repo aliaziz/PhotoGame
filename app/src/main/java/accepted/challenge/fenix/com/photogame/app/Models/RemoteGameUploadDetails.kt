@@ -3,7 +3,7 @@ package accepted.challenge.fenix.com.photogame.app.Models
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class GameUploadDetails(
+class RemoteGameUploadDetails(
         @SerializedName("photo_url") val pic: String,
         val caption: String,
         val description: String?,

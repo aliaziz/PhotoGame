@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.widget.Button
 import android.widget.Toast
 import dmax.dialog.SpotsDialog
@@ -76,4 +77,16 @@ fun Activity.moveTo(newActivity: Class<*>, vararg extras: Pair<String, Serializa
  */
 fun isEmailValid(email: String): Boolean =
     (email.contains("@") && email.contains("."))
+
+/**
+ * Check for internet connectivity
+ *
+ * @param context - the application context
+ * @return whether device is connected to internet
+ */
+fun isOnline(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork = cm.activeNetworkInfo
+    return activeNetwork != null && activeNetwork.isConnected
+}
 
