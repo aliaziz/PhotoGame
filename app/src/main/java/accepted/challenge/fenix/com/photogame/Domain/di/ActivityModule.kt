@@ -1,5 +1,6 @@
 package accepted.challenge.fenix.com.photogame.Domain.di
 
+import accepted.challenge.fenix.com.photogame.app.View.HomeActivity
 import accepted.challenge.fenix.com.photogame.app.View.LoginRegActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -8,4 +9,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
     @ContributesAndroidInjector
     internal abstract fun loginActivityInjector(): LoginRegActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun homeActivityInjector(): HomeActivity
 }

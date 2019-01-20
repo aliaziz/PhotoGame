@@ -1,5 +1,6 @@
 package accepted.challenge.fenix.com.photogame.app.View
 
+import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
 import accepted.challenge.fenix.com.photogame.Domain.notifications.UploadBroadcastReceiver
 import accepted.challenge.fenix.com.photogame.Domain.moveTo
 import accepted.challenge.fenix.com.photogame.R
@@ -7,6 +8,7 @@ import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.LeadershipFrag
 import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.PlayGameFrag
 import accepted.challenge.fenix.com.photogame.app.View.HomeFrags.UploadPicFrag
 import accepted.challenge.fenix.com.photogame.app.ViewModel.UserViewModel
+import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.UserViewModelFactory
 import android.arch.lifecycle.ViewModelProviders
 import android.content.IntentFilter
@@ -24,6 +26,9 @@ class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var userFactory: UserViewModelFactory
+    @Inject
+    lateinit var gamingViewModelFactory:GamingViewModelFactory
+
     private lateinit var userViewModel: UserViewModel
     private lateinit var uploadBroadcastReceiver: UploadBroadcastReceiver
 
@@ -69,6 +74,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun updateView(fragment: Fragment) {
+
+        val bundle = Bundle()
+        bundle.putSerializable(Keys.FACTORY_KEY, gamingViewModelFactory)
+        fragment.arguments = bundle
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, fragment)

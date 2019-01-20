@@ -3,6 +3,7 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 import accepted.challenge.fenix.com.photogame.Domain.*
 import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
+import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
 import accepted.challenge.fenix.com.photogame.Domain.notifications.MODEL_DATA_KEY
 import accepted.challenge.fenix.com.photogame.Domain.notifications.UploadService
 import accepted.challenge.fenix.com.photogame.R
@@ -12,6 +13,7 @@ import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.Gam
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -35,9 +37,15 @@ class UploadPicFrag : Fragment() {
     private val captureImage = 1
     private var imageString: String? = null
 
-    @Inject
-    lateinit var gamingViewModelFactory:GamingViewModelFactory
+    private lateinit var gamingViewModelFactory:GamingViewModelFactory
     private lateinit var gamingViewModel: GamingViewModel
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        (arguments?.getSerializable(Keys.FACTORY_KEY) as GamingViewModelFactory).let {
+            gamingViewModelFactory = it
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(requireActivity())

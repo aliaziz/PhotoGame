@@ -8,7 +8,9 @@ import dagger.android.AndroidInjectionModule
 
 @Component(modules = [NetModule::class,
     ActivityModule::class,
-    AndroidInjectionModule::class])
+    AndroidInjectionModule::class,
+    BroadcastsModule::class,
+    FragModule::class])
 
 interface AppComponent {
 

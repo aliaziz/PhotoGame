@@ -4,9 +4,11 @@ import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import java.io.Serializable
 import javax.inject.Inject
 
-class GamingViewModelFactory @Inject constructor(private val gamingRepository: GamingRepository): ViewModelProvider.Factory {
+class GamingViewModelFactory @Inject constructor(private val gamingRepository: GamingRepository):
+        ViewModelProvider.Factory, Serializable {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GamingViewModel::class.java)) {

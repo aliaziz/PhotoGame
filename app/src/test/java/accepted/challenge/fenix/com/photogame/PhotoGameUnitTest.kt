@@ -1,14 +1,26 @@
 package accepted.challenge.fenix.com.photogame
 
+import accepted.challenge.fenix.com.photogame.Data.ApiService
 import accepted.challenge.fenix.com.photogame.Data.repository.GamingRepository
 import accepted.challenge.fenix.com.photogame.Domain.Helpers
+import accepted.challenge.fenix.com.photogame.Domain.managers.PrefManager
+import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
 import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
+import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
+import android.content.SharedPreferences
+import com.google.gson.Gson
+import io.reactivex.Single
+import io.realm.Realm
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 
 class PhotoGameUnitTest {
+
+
+    val gamingViewModel = Mockito.mock(GamingViewModel::class.java)
 
     @Test
     fun validatesCreds() {
@@ -27,22 +39,4 @@ class PhotoGameUnitTest {
         assertTrue(Helpers.isEmailValid("a@c.com"))
         assertFalse(Helpers.isEmailValid("abcom"))
     }
-
-    @Test
-    fun savesPendingUploads() {
-        val pendingUpload
-                = RemoteGameUploadDetails("http://abc.d.png",
-                "pending",
-                "desc",
-                "life",
-                "kampala")
-
-
-        val gameRepo = Mockito.mock(GamingRepository::class.java)
-        Mockito.`when`(gameRepo.saveUpload(pendingUpload))
-
-        assert(gameRepo.getSavedUpload().size > 0)
-        assertTrue(gameRepo.hasPendingUpload)
-    }
-
 }

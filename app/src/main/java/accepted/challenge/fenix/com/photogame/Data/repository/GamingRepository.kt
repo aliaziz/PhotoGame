@@ -23,7 +23,7 @@ open class GamingRepository @Inject constructor(private val apiService: ApiServi
 
     var hasPendingUpload: Boolean
         get() = prefManager.hasPendingUpload
-        private set(value) {
+        set(value) {
             prefManager.hasPendingUpload = value
         }
 
@@ -145,7 +145,7 @@ open class GamingRepository @Inject constructor(private val apiService: ApiServi
                 remoteGameUploadDetails.description,
                 remoteGameUploadDetails.category,
                 remoteGameUploadDetails.location)
-        hasPendingUpload = true
+        //hasPendingUpload = true
         realm.beginTransaction()
         realm.copyToRealmOrUpdate(localUploadDetails)
         realm.commitTransaction()

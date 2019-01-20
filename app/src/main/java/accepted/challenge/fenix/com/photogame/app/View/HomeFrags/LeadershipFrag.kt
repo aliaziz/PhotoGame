@@ -3,6 +3,7 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 import accepted.challenge.fenix.com.photogame.Domain.Helpers
 import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
+import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
 import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
@@ -10,6 +11,7 @@ import accepted.challenge.fenix.com.photogame.app.View.ViewAdapters.LeadershipAd
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -28,15 +30,20 @@ import javax.inject.Inject
  */
 class LeadershipFrag : Fragment() {
 
-    @Inject
-    lateinit var gamingViewModelFactory:GamingViewModelFactory
-
+    private lateinit var gamingViewModelFactory:GamingViewModelFactory
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var gamingViewModel: GamingViewModel
     private lateinit var parentView: View
     private var leadershipAdapter: LeadershipAdapter? = null
     private var scores: ArrayList<LeaderShipModel> = ArrayList()
     private val disposeBag = CompositeDisposable()
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        (arguments?.getSerializable(Keys.FACTORY_KEY) as GamingViewModelFactory).let {
+            gamingViewModelFactory = it
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(requireActivity())

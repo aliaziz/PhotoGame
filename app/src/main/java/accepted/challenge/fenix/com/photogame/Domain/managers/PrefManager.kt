@@ -3,8 +3,9 @@ package accepted.challenge.fenix.com.photogame.Domain.managers
 import accepted.challenge.fenix.com.photogame.app.Models.User
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class PrefManager(private val pref: SharedPreferences,
+open class PrefManager @Inject constructor(private val pref: SharedPreferences,
                   private val gson: Gson) {
 
     private val editor: SharedPreferences.Editor = pref.edit()

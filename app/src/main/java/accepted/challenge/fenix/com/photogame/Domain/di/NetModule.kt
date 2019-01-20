@@ -51,7 +51,8 @@ class NetModule {
      *
      * @param context
      */
-    private fun providePref(context: Context): SharedPreferences =
+    @Provides
+    fun providePref(context: Context): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context)
 
     /**
@@ -59,7 +60,8 @@ class NetModule {
      *
      * @return [Gson]
      */
-    private fun provideGson(): Gson {
+    @Provides
+    fun provideGson(): Gson {
         return GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()

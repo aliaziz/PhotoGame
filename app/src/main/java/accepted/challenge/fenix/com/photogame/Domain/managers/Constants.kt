@@ -13,3 +13,9 @@ class Constants {
         const val MISSING_DATA = "Missing input"
     }
 }
+
+class Keys {
+    companion object {
+        const val FACTORY_KEY = "gamingFactory"
+    }
+}
