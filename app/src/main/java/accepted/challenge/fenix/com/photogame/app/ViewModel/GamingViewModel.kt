@@ -69,6 +69,9 @@ class GamingViewModel @Inject constructor(private val gamingRepository: GamingRe
                             messageSubscription.onNext(Helpers.message(ErrorMessages.LIKE_ERROR))
                         }
                         )
+            } else {
+                showLoader.onNext(false)
+                messageSubscription.onNext(Helpers.message(ErrorMessages.LOAD_ERROR))
             }
         }
     }
