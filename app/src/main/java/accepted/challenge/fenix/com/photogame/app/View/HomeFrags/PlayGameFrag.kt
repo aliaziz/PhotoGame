@@ -1,9 +1,11 @@
 package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 
-import accepted.challenge.fenix.com.photogame.Domain.*
+import accepted.challenge.fenix.com.photogame.Domain.Helpers
+import accepted.challenge.fenix.com.photogame.Domain.hide
+import accepted.challenge.fenix.com.photogame.Domain.loader
 import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
+import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
 import accepted.challenge.fenix.com.photogame.app.ViewModel.ViewModelFactory.GamingViewModelFactory
@@ -16,8 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
-import dagger.android.AndroidInjection
-import dagger.android.ContributesAndroidInjector
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_play_game.*
 import kotlinx.android.synthetic.main.fragment_play_game.view.*
@@ -29,16 +30,15 @@ import javax.inject.Inject
  */
 class PlayGameFrag : Fragment() {
 
-    private lateinit var gamingViewModelFactory:GamingViewModelFactory
+    @Inject
+    lateinit var gamingViewModelFactory:GamingViewModelFactory
     private lateinit var gamingViewModel: GamingViewModel
     private val disposeBag = CompositeDisposable()
     private var loadDialog: AlertDialog? = null
 
     override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
-        (arguments?.getSerializable(Keys.FACTORY_KEY) as GamingViewModelFactory).let {
-            gamingViewModelFactory = it
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

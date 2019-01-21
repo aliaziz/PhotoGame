@@ -37,11 +37,6 @@ interface ApiService {
     fun dislikePic(@Field("id") photoId: Int,
                    @Field("api_token") token: String): Call<ApiMessageResponse>
 
-    @FormUrlEncoded
-    @POST("view")
-    fun viewedPic(@Field("id") photoId: Int,
-                  @Field("api_token") token: String): Call<ApiMessageResponse>
-
     @GET("leadership-board")
     fun getLeadershipBoard(@Query("api_token") token: String)
             : Call<ApiDataResponse<LeadershipResponse>>

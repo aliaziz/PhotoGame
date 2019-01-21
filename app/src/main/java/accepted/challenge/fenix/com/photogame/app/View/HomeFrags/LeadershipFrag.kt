@@ -3,7 +3,6 @@ package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 import accepted.challenge.fenix.com.photogame.Domain.Helpers
 import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
 import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
@@ -20,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_leadership.view.*
 import javax.inject.Inject
@@ -30,7 +30,8 @@ import javax.inject.Inject
  */
 class LeadershipFrag : Fragment() {
 
-    private lateinit var gamingViewModelFactory:GamingViewModelFactory
+    @Inject
+    lateinit var gamingViewModelFactory:GamingViewModelFactory
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var gamingViewModel: GamingViewModel
     private lateinit var parentView: View
@@ -39,10 +40,8 @@ class LeadershipFrag : Fragment() {
     private val disposeBag = CompositeDisposable()
 
     override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
-        (arguments?.getSerializable(Keys.FACTORY_KEY) as GamingViewModelFactory).let {
-            gamingViewModelFactory = it
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

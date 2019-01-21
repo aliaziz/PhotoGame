@@ -3,16 +3,17 @@ package accepted.challenge.fenix.com.photogame.app
 import accepted.challenge.fenix.com.photogame.Domain.di.DaggerAppComponent
 import android.app.Activity
 import android.app.Application
-import android.app.Fragment
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.support.v4.app.Fragment
 import dagger.android.*
+import dagger.android.support.HasSupportFragmentInjector
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import javax.inject.Inject
 
 class PhotoGame: Application(), HasActivityInjector,
-        HasBroadcastReceiverInjector, HasServiceInjector, HasFragmentInjector
+        HasBroadcastReceiverInjector, HasServiceInjector, HasSupportFragmentInjector
 {
 
     @Inject
@@ -25,7 +26,7 @@ class PhotoGame: Application(), HasActivityInjector,
     internal lateinit var serviceInjector: DispatchingAndroidInjector<Service>
 
     @Inject
-    internal lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+    internal lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun serviceInjector(): AndroidInjector<Service>  = serviceInjector
 
@@ -34,7 +35,7 @@ class PhotoGame: Application(), HasActivityInjector,
     override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver>
             =  broadcastReceiverInjector
 
-    override fun fragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<android.support.v4.app.Fragment>  = supportFragmentInjector
 
     override fun onCreate() {
         super.onCreate()

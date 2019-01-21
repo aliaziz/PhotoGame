@@ -1,11 +1,11 @@
 package accepted.challenge.fenix.com.photogame.app.View.HomeFrags
 
 
-import accepted.challenge.fenix.com.photogame.Domain.*
+import accepted.challenge.fenix.com.photogame.Domain.Helpers
 import accepted.challenge.fenix.com.photogame.Domain.managers.ErrorMessages
-import accepted.challenge.fenix.com.photogame.Domain.managers.Keys
 import accepted.challenge.fenix.com.photogame.Domain.notifications.MODEL_DATA_KEY
 import accepted.challenge.fenix.com.photogame.Domain.notifications.UploadService
+import accepted.challenge.fenix.com.photogame.Domain.toast
 import accepted.challenge.fenix.com.photogame.R
 import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.ViewModel.GamingViewModel
@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_upload_pic.*
 import kotlinx.android.synthetic.main.fragment_upload_pic.view.*
 import java.io.ByteArrayOutputStream
@@ -33,18 +34,17 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  *
  */
-class UploadPicFrag : Fragment() {
+class UploadPicFrag: Fragment() {
     private val captureImage = 1
     private var imageString: String? = null
 
-    private lateinit var gamingViewModelFactory:GamingViewModelFactory
+    @Inject
+    lateinit var gamingViewModelFactory:GamingViewModelFactory
     private lateinit var gamingViewModel: GamingViewModel
 
     override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
-        (arguments?.getSerializable(Keys.FACTORY_KEY) as GamingViewModelFactory).let {
-            gamingViewModelFactory = it
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

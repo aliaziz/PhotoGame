@@ -5,8 +5,8 @@ import accepted.challenge.fenix.com.photogame.Data.model.*
 import accepted.challenge.fenix.com.photogame.Domain.managers.Constants
 import accepted.challenge.fenix.com.photogame.Domain.managers.GameUpdateType
 import accepted.challenge.fenix.com.photogame.Domain.managers.PrefManager
-import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import accepted.challenge.fenix.com.photogame.app.Models.LeaderShipModel
+import accepted.challenge.fenix.com.photogame.app.Models.RemoteGameUploadDetails
 import io.reactivex.Single
 import io.realm.Realm
 import retrofit2.Call
