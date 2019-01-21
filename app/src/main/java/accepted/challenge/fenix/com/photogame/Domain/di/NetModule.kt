@@ -29,13 +29,12 @@ class NetModule {
     fun providesContext(application: Application): Context = application
 
     @Provides
-    fun providesRealm(): Realm
-            = Realm.getDefaultInstance()
+    fun providesRealm(): Realm = Realm.getDefaultInstance()
 
     @Provides
     fun providesApiService(context: Context): ApiService {
         val retrofit = Retrofit.Builder()
-                .baseUrl(context.getString(R.string.end_point)?: Constants.MOCK_URL)
+                .baseUrl(context.getString(R.string.end_point) ?: Constants.MOCK_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(ApiService::class.java)
