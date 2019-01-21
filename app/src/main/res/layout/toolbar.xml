@@ -21,11 +21,11 @@
             android:contentDescription="@string/image" />
 
         <TextView
-            android:gravity="bottom"
+            android:gravity="center"
             android:id="@+id/viewTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:fontFamily="casual"
+            android:fontFamily="serif-monospace"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textSize="@dimen/home_font_size"
@@ -35,10 +35,12 @@
         <ImageButton
             app:layout_constraintLeft_toRightOf="@id/viewTitle"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:background="@null"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:layout_width="@dimen/sixty_dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:padding="@dimen/ten_dp"
             android:src="@drawable/logout_colored"
             android:id="@+id/logOutButton"

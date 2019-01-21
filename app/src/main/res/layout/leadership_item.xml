@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:background="#e0e0e0"
         android:orientation="horizontal">
 
         <TextView
@@ -17,7 +16,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/name"
-            android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="18sp"
             tool:text="Name" />
@@ -28,7 +26,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/likes"
-            android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="18sp"
             tool:text="Name" />
@@ -39,7 +36,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/dislikes"
-            android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="18sp"
             tool:text="Name" />
@@ -50,7 +46,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/views"
-            android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="18sp"
             tool:text="Name" />
